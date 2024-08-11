@@ -1,3 +1,4 @@
+import AddToCart from "@/components/product/AddToCart";
 import Rating from "@/components/product/Rating";
 import productService from "@/lib/services/productService";
 import Image from "next/image";
@@ -61,9 +62,9 @@ export default async function ProductDetailsPage({ params }: Props) {
 
               {countInStock !== 0 && (
                 <div className="card-actions">
-                  <button className="btn btn-warning w-full">
-                    Add to Cart
-                  </button>
+                  <AddToCart
+                    item={{ ...product, qty: 0, color: "", size: "" }}
+                  />
                 </div>
               )}
             </div>
