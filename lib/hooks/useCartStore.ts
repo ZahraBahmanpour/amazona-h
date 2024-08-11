@@ -25,14 +25,14 @@ export default function useCartService() {
     totalCount,
     increase: (item: OrderItem) => {
       const exist = items.find((x) => x.slug === item.slug);
-
       const updatedCartItems = exist
         ? items.map((x) =>
             x.slug === item.slug ? { ...exist, qty: exist.qty + 1 } : x
           )
         : [...items, { ...item, qty: 1 }];
 
-      const { totalPrice, totalCount } = updateCartInfo(items);
+      const { totalPrice, totalCount } = updateCartInfo(updatedCartItems);
+      console.log(totalCount);
       cartStore.setState({ items: updatedCartItems, totalPrice, totalCount });
     },
     decrease: (item: OrderItem) => {
@@ -46,7 +46,7 @@ export default function useCartService() {
               x.slug === item.slug ? { ...exist, qty: exist.qty - 1 } : x
             );
 
-      const { totalPrice, totalCount } = updateCartInfo(items);
+      const { totalPrice, totalCount } = updateCartInfo(updatedCartItems);
       cartStore.setState({ items: updatedCartItems, totalPrice, totalCount });
     },
     clear: () => {
