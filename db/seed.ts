@@ -9,13 +9,21 @@ const main = async () => {
     const client = new Client({ connectionString: process.env.POSTGRES_URL });
     await client.connect();
     const db = drizzle(client);
+    await db.delete(schema.products);
+    await db.delete(schema.users);
 
-    const res = await db
+    const resProducts = await db
       .insert(schema.products)
       .values(data.products)
       .returning();
 
-    console.log(res);
+    const resUsers = await db
+      .insert(schema.users)
+      .values(data.users)
+      .returning();
+
+    console.log(resProducts);
+    console.log(resUsers);
 
     await client.end();
   } catch (e) {
